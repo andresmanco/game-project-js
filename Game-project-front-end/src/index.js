@@ -1,6 +1,7 @@
 const divContainer = document.querySelector('#fighter-container')
 const divNewUser = document.querySelector('#new-user-form')
 const divLogin = document.querySelector('#login-form')
+const buttonDiv = document.querySelector('#buttonsDiv')
 
 document.addEventListener('DOMContentLoaded', ()=>{
   renderButtons()
@@ -36,7 +37,6 @@ function createAvatars(element) {
 }
 
 function renderButtons() {
-  const buttonDiv = document.querySelector('#buttonsDiv')
   let loginBtn = document.createElement('button')
   let accBtn = document.createElement('button')
 
@@ -50,7 +50,12 @@ function renderButtons() {
   buttonDiv.append(loginBtn, accBtn)
 }
 
+function clearButtonDiv() {
+  buttonDiv.innerHTML=""
+}
+
 function renderLogin() {
+  clearButtonDiv()
   let loginForm = document.createElement('form')
   let usernameInput = document.createElement('input')
   let passwordInput = document.createElement('input')
@@ -76,6 +81,7 @@ function renderLogin() {
 }
 
 function renderNewUserForm() {
+  clearButtonDiv()
   let createUserForm = document.createElement('form')
   let nameInput = document.createElement('input')
   let emailInput = document.createElement('input')
@@ -110,25 +116,38 @@ function retrieveNewUserData(event) {
   let username = els[2].value
   let password = els[3].value
 
+  clearNewUserForm()
+
+  let avatarButton = document.createElement('button')
+  avatarButton.innerText = "Choose an Avatar"
+  avatarButton.addEventListener('click',()=>{
+    clearNewUserForm()
+    Avatar.getAllAvatars()
+  })
+  divNewUser.append(avatarButton)
 
   createNewUser(name,email,username,password)
 }
 
 
+
+
 function createNewUser(name,email,username,password) {
-  new User(name,username,1)
+    let user = new User(name,username,1)
   fetch('http://localhost:3000/users',{
   method: 'POST',
   headers:{
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+    'accept': 'application.json'
+
+  },
   body: JSON.stringify({
-    name: name
-    email: email
-    username: username
+    name: name,
+    email: email,
+    username: username,
     password: password
   })
-  })
+})
 }
 function clearLogin() {
   divLogin.innerHTML = ""
