@@ -7,6 +7,15 @@ class User{
     this.avatarId = avatarId
     gameStore.users.push(this)
   }
+  getAvatars(){
+    let arr = []
+    this.avatarId.forEach(id=>{
+      arr.push(gameStore.avatars.find(avatar=>{
+        return avatar.id === id
+      })
+    )})
+    return arr
+  }
 
   static getAllUsers(){
     return gameStore.users
