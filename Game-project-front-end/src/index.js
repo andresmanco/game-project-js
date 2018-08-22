@@ -1,4 +1,6 @@
 const divContainer = document.querySelector('#fighter-container')
+const divNewUser = document.querySelector('#new-user-form')
+const divLogin = document.querySelector('#login-form')
 
 document.addEventListener('DOMContentLoaded', ()=>{
   renderButtons()
@@ -56,8 +58,50 @@ function renderLogin() {
   let passwordInput = document.createElement('input')
   let submitBtn = document.createElement('submit')
 
+
+
+  usernameInput.placeholder = 'Username...'
+  passwordInput.placeholder = "Password..."
+
+
+  usernameInput.name = 'username'
+  passwordInput.name = 'password'
+
+  loginForm.append(usernameInput,passwordInput)
+  divLogin.append('loginForm')
 }
 
-function renderAccount() {
+// // function renderAccount() {
+// //
+// }
 
+function renderNewUserForm() {
+  let createUserForm = document.createElement('form')
+  let nameInput = document.createElement('input')
+  let emailInput = document.createElement('input')
+  let usernameInput = document.createElement('input')
+  let password = document.createElement('input')
+  let submit = document.createElement('submit')
+
+  nameInput.placeholder = 'Full Name...'
+  emailInput.placeholder = 'Email...'
+  usernameInput.placeholder = 'Username...'
+  password.placeholder = 'Password...'
+
+  nameInput.name = 'name'
+  emailInput.name = 'email'
+  usernameInput.name = 'username'
+  password.name = 'password'
+
+  createUserForm.append(nameInput,emailInput,usernameInput,passwordInput)
+  divNewUser.append(createUserForm)
+}
+
+
+function clearLogin() {
+  divLogin.innerHTML = ""
+}
+
+function clearNewUserForm() {
+  divNewUser.innerHTML=""
 }
