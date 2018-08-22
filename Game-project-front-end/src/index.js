@@ -101,8 +101,11 @@ function renderNewUserForm() {
   usernameInput.name = 'username'
   password.name = 'password'
 
+
   createUserForm.append(nameInput,emailInput,usernameInput,password,submit)
   createUserForm.addEventListener('submit', ()=> retrieveNewUserData(event))
+
+  createUserForm.append(nameInput, emailInput, usernameInput, passwordInput)
   divNewUser.append(createUserForm)
 }
 
@@ -155,4 +158,9 @@ function clearLogin() {
 
 function clearNewUserForm() {
   divNewUser.innerHTML = ""
+}
+
+function pickAvatar(e) {
+let id = parseInt(e.currentTarget.id.split('-')[1])
+return Avatar.findAvatar(id)
 }
