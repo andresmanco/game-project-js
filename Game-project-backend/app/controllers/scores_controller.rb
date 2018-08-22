@@ -4,7 +4,7 @@ class ScoresController < ApplicationController
   end
 
   def create
-    render json: Score.create(params)
+    render json: Score.create(score_params)
   end
 
 

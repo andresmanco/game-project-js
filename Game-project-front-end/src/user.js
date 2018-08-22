@@ -1,10 +1,11 @@
 let gameStore = {users: [], avatars: [], scores: []}
 class User{
-  constructor(id, name, username, avatarId){
+  constructor(id, name, username, password, avatarId){
     this.id = id
     this.name = name
     this.username = username
     this.avatarId = avatarId
+    this.password = password
     gameStore.users.push(this)
   }
   getAvatars(){
@@ -23,6 +24,20 @@ class User{
 
   static findUser(id){
     return gameStore.users.find(user=> {return user.id === id})
+  }
+
+  static loginUser(username, password){
+    let user = gameStore.users.find(user=>{
+      return user.username === username
+    })
+
+    if (user !== undefined){
+      if (password === user.password){
+        user.renderUser()
+      }else{
+        alert('username or password incorrect')
+      }
+    }
   }
 
   renderUser(){

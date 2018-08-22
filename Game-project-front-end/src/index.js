@@ -1,7 +1,7 @@
 const divContainer = document.querySelector('#fighter-container')
 const divNewUser = document.querySelector('#new-user-form')
 const divLogin = document.querySelector('#login-form')
-
+let avatarPickedId
 document.addEventListener('DOMContentLoaded', ()=>{
   renderButtons()
   getUsers()
@@ -19,7 +19,7 @@ function getUsers() {
 function createUsers(element) {
   let id = []
   element.avatars.forEach(avatar=> {id.push(avatar.id)})
-  let user = new User(element.id, element.name, element.username, id)
+  let user = new User(element.id, element.name, element.username, element.password, id)
 }
 
 function getAvatars() {
@@ -51,43 +51,109 @@ function renderButtons() {
 }
 
 function renderLogin() {
+  clearLogin()
+  clearNewUserForm()
   let loginForm = document.createElement('form')
   let usernameInput = document.createElement('input')
   let passwordInput = document.createElement('input')
-  let submitBtn = document.createElement('submit')
+  let submitBtn = document.createElement('input')
 
   usernameInput.placeholder = 'Username...'
   passwordInput.placeholder = "Password..."
 
+  submitBtn.type = 'submit'
+  loginForm.addEventListener('submit', login)
+
   usernameInput.name = 'username'
   passwordInput.name = 'password'
 
-  loginForm.append(usernameInput, passwordInput)
-  divLogin.append('loginForm')
+
+  loginForm.append(usernameInput, passwordInput, submitBtn)
+  divLogin.append(loginForm)
+  // debugger
 }
 
 function renderNewUserForm() {
+  clearLogin()
+  clearNewUserForm()
   let createUserForm = document.createElement('form')
   let nameInput = document.createElement('input')
   let emailInput = document.createElement('input')
   let usernameInput = document.createElement('input')
   let password = document.createElement('input')
-  let submit = document.createElement('submit')
+  let submit = document.createElement('input')
 
   nameInput.placeholder = 'Full Name...'
   emailInput.placeholder = 'Email...'
   usernameInput.placeholder = 'Username...'
   password.placeholder = 'Password...'
 
+  submit.type = 'submit'
+
   nameInput.name = 'name'
   emailInput.name = 'email'
   usernameInput.name = 'username'
   password.name = 'password'
 
-  createUserForm.append(nameInput, emailInput, usernameInput, passwordInput)
+
+  createUserForm.append(nameInput, emailInput, usernameInput, password, submit)
+  createUserForm.addEventListener('submit', ()=>retrieveNewUserData(event))
+
   divNewUser.append(createUserForm)
+  Avatar.getAllAvatars()
+
 }
 
+function retrieveNewUserData(event) {
+  event.preventDefault()
+  let form = event.target
+  let els = form.elements
+  let name = els[0].value
+  let email = els[1].value
+  let username = els[2].value
+  let password = els[3].value
+
+  clearNewUserForm()
+
+  createNewUser(name, email, username, password)
+}
+
+function createNewUser(name, email, username, password) {
+   let user = new User(name, username, password, avatarPickedId)
+   fetch('http://localhost:3000/users',{
+     method: 'POST',
+     headers:{
+       'Content-Type': 'application/json',
+       'accept': 'application.json'
+
+     },
+     body: JSON.stringify({
+       name: name,
+       email: email,
+       username: username,
+       password: password
+     })
+   }).then(r=> r.json())
+   .then(user=>{
+     userAvatar(user.id)
+   })
+}
+
+  function userAvatar(userId) {
+    debugger
+    fetch('http://localhost:3000/user_avatars',{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'accept': 'application.json'
+      },
+      body: JSON.stringify({
+        user_id: userId,
+        avatar_id: avatarPickedId
+      })
+    }).then(r=> r.json())
+    .then(json => {console.log(json)})
+  }
 
 function clearLogin() {
   divLogin.innerHTML = ""
@@ -98,6 +164,13 @@ function clearNewUserForm() {
 }
 
 function pickAvatar(e) {
-let id = parseInt(e.currentTarget.id.split('-')[1])
-return Avatar.findAvatar(id)
+  avatarPickedId = parseInt(e.currentTarget.id.split('-')[1])
+}
+
+function login(e){
+  e.preventDefault()
+  clearLogin()
+  let username = e.target.elements[0].value
+  let password = e.target.elements[1].value
+  User.loginUser(username, password)
 }
