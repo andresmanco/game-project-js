@@ -1,3 +1,15 @@
+div {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+#buttonsDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .card {
   width: 100px;
   height: 250px;
@@ -6,6 +18,11 @@
 .image {
   width: 80px;
   height: 200px;
+}
+
+.header {
+  text-align: center;
+  font-style: italic;
 }
 
 h1 {
