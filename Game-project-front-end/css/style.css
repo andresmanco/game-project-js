@@ -1,0 +1,14 @@
+.card {
+  width: 100px;
+  height: 250px;
+}
+
+.image {
+  width: 80px;
+  height: 200px;
+}
+
+h1 {
+  text-align: center;
+  font-style: italic;
+}
