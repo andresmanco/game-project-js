@@ -24,6 +24,8 @@ class Avatar{
     let divHeader = document.createElement('div')
     let divDescription = document.createElement('div')
 
+    divCard.addEventListener('click', pickAvatar)
+
     divHeader.classList.add('header')
     divDescription.classList.add('description')
     p.innerHTML = this.description

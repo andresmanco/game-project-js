@@ -8,6 +8,7 @@
 User.destroy_all
 Avatar.destroy_all
 UserAvatar.destroy_all
+Score.destroy_all
 user0 = User.create(name: 'Andres Manco', username: 'andresmanco', email: 'andresmanco@gmail.com', password: 'password')
 user1 = User.create(name: 'Alvaro De La Torre', username: 'alvarodelatorre', email: 'alvarodelatorre@gmail.com', password: 'password')
 user2 = User.create(name: 'Ryan Chan', username: 'ryanchan', email: 'ryanchan@gmail.com', password: 'password')
@@ -52,6 +53,7 @@ avatar18 = Avatar.create(name:"Robotomungo",image:'http://www.scrollboss.illmosi
 avatar19 = Avatar.create(name: "rebOOt",image:'http://www.scrollboss.illmosis.net/customsprite/ninjagaiden-fgtsze_pumpkinhead_knife_stand.png',description: "he reboots")
 avatar20 = Avatar.create(name:"Moon Master",image:'http://www.scrollboss.illmosis.net/customsprite/ninjagaiden-fgtsze_pumpkinhead_knife_stand.png',description: " Your the moon master")
 
+
 UserAvatar.create(user_id: user1.id, avatar_id: avatar20.id)
 UserAvatar.create(user_id: user2.id, avatar_id: avatar19.id)
 UserAvatar.create(user_id: user3.id, avatar_id: avatar18.id)
@@ -84,3 +86,37 @@ UserAvatar.create(user_id: user0.id, avatar_id: avatar3.id)
 UserAvatar.create(user_id: user0.id, avatar_id: avatar5.id)
 UserAvatar.create(user_id: user0.id, avatar_id: avatar7.id)
 UserAvatar.create(user_id: user0.id, avatar_id: avatar9.id)
+
+
+Score.create(user_id: user1.id, avatar_id: avatar20.id, points: 10)
+Score.create(user_id: user2.id, avatar_id: avatar19.id, points: 11)
+Score.create(user_id: user3.id, avatar_id: avatar18.id, points: 10)
+Score.create(user_id: user4.id, avatar_id: avatar17.id, points: 7)
+Score.create(user_id: user5.id, avatar_id: avatar18.id, points: 7)
+Score.create(user_id: user6.id, avatar_id: avatar16.id, points: 10)
+Score.create(user_id: user7.id, avatar_id: avatar15.id, points: 7)
+Score.create(user_id: user8.id, avatar_id: avatar14.id, points: 9)
+Score.create(user_id: user9.id, avatar_id: avatar13.id, points: 10)
+Score.create(user_id: user10.id, avatar_id: avatar12.id, points: 6)
+Score.create(user_id: user11.id, avatar_id: avatar11.id, points: 6)
+Score.create(user_id: user12.id, avatar_id: avatar10.id, points: 6)
+Score.create(user_id: user13.id, avatar_id: avatar9.id, points: 8)
+Score.create(user_id: user14.id, avatar_id: avatar8.id, points: 9)
+Score.create(user_id: user15.id, avatar_id: avatar7.id, points: 8)
+Score.create(user_id: user16.id, avatar_id: avatar6.id, points: 9)
+Score.create(user_id: user17.id, avatar_id: avatar5.id, points: 9)
+Score.create(user_id: user18.id, avatar_id: avatar4.id, points: 9)
+Score.create(user_id: user19.id, avatar_id: avatar3.id, points: 9)
+Score.create(user_id: user20.id, avatar_id: avatar2.id, points: 7)
+Score.create(user_id: user1.id, avatar_id: avatar1.id, points: 9)
+Score.create(user_id: user2.id, avatar_id: avatar2.id, points: 9)
+Score.create(user_id: user3.id, avatar_id: avatar5.id, points: 10)
+Score.create(user_id: user4.id, avatar_id: avatar8.id, points: 9)
+Score.create(user_id: user5.id, avatar_id: avatar10.id, points: 8)
+Score.create(user_id: user6.id, avatar_id: avatar15.id, points: 8)
+Score.create(user_id: user7.id, avatar_id: avatar13.id, points: 8)
+Score.create(user_id: user8.id, avatar_id: avatar2.id, points: 8)
+Score.create(user_id: user0.id, avatar_id: avatar3.id, points: 8)
+Score.create(user_id: user0.id, avatar_id: avatar5.id, points: 8)
+Score.create(user_id: user0.id, avatar_id: avatar7.id, points: 8)
+Score.create(user_id: user0.id, avatar_id: avatar9.id, points: 7)
