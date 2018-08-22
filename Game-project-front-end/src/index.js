@@ -5,7 +5,7 @@ const divLogin = document.querySelector('#login-form')
 document.addEventListener('DOMContentLoaded', ()=>{
   renderButtons()
   getUsers()
-
+  getAvatars()
 })
 
 function getUsers() {
@@ -26,7 +26,6 @@ function getAvatars() {
   fetch('http://localhost:3000/avatars')
   .then(res=> res.json())
   .then(json=>{
-    //render
     json.forEach(element=>
       createAvatars(element))
   })
@@ -34,7 +33,6 @@ function getAvatars() {
 
 function createAvatars(element) {
   let avatar = new Avatar(element.id, element.name, element.image, element.description)
-  avatar.renderAvatar()
 }
 
 function renderButtons() {
@@ -58,11 +56,11 @@ function renderLogin() {
   let passwordInput = document.createElement('input')
   let submitBtn = document.createElement('input')
 
-
-
   usernameInput.placeholder = 'Username...'
   passwordInput.placeholder = "Password..."
+
   submitBtn.type = 'submit'
+
 
   usernameInput.name = 'username'
   passwordInput.name = 'password'
@@ -72,11 +70,10 @@ function renderLogin() {
   divLogin.append(loginForm)
 
 
-}
 
-// // function renderAccount() {
-// //
-// }
+  loginForm.append(usernameInput, passwordInput)
+  divLogin.append('loginForm')
+}
 
 function renderNewUserForm() {
   let createUserForm = document.createElement('form')
@@ -138,5 +135,5 @@ function clearLogin() {
 }
 
 function clearNewUserForm() {
-  divNewUser.innerHTML=""
+  divNewUser.innerHTML = ""
 }
