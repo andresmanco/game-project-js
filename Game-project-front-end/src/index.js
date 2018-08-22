@@ -1,6 +1,7 @@
 const divContainer = document.querySelector('#fighter-container')
 const divNewUser = document.querySelector('#new-user-form')
 const divLogin = document.querySelector('#login-form')
+const buttonDiv = document.querySelector('#buttonsDiv')
 
 document.addEventListener('DOMContentLoaded', ()=>{
   renderButtons()
@@ -36,7 +37,6 @@ function createAvatars(element) {
 }
 
 function renderButtons() {
-  const buttonDiv = document.querySelector('#buttonsDiv')
   let loginBtn = document.createElement('button')
   let accBtn = document.createElement('button')
 
@@ -50,45 +50,108 @@ function renderButtons() {
   buttonDiv.append(loginBtn, accBtn)
 }
 
+function clearButtonDiv() {
+  buttonDiv.innerHTML=""
+}
+
 function renderLogin() {
+  clearButtonDiv()
   let loginForm = document.createElement('form')
   let usernameInput = document.createElement('input')
   let passwordInput = document.createElement('input')
-  let submitBtn = document.createElement('submit')
+  let submitBtn = document.createElement('input')
 
   usernameInput.placeholder = 'Username...'
   passwordInput.placeholder = "Password..."
 
+  submitBtn.type = 'submit'
+
+
   usernameInput.name = 'username'
   passwordInput.name = 'password'
+
+
+  loginForm.append(usernameInput,passwordInput,submitBtn)
+  divLogin.append(loginForm)
+
+
 
   loginForm.append(usernameInput, passwordInput)
   divLogin.append('loginForm')
 }
 
 function renderNewUserForm() {
+  clearButtonDiv()
   let createUserForm = document.createElement('form')
   let nameInput = document.createElement('input')
   let emailInput = document.createElement('input')
   let usernameInput = document.createElement('input')
   let password = document.createElement('input')
-  let submit = document.createElement('submit')
+  let submit = document.createElement('input')
 
   nameInput.placeholder = 'Full Name...'
   emailInput.placeholder = 'Email...'
   usernameInput.placeholder = 'Username...'
   password.placeholder = 'Password...'
 
+  submit.type = 'submit'
+
   nameInput.name = 'name'
   emailInput.name = 'email'
   usernameInput.name = 'username'
   password.name = 'password'
+
+
+  createUserForm.append(nameInput,emailInput,usernameInput,password,submit)
+  createUserForm.addEventListener('submit', ()=> retrieveNewUserData(event))
 
   createUserForm.append(nameInput, emailInput, usernameInput, passwordInput)
   divNewUser.append(createUserForm)
 }
 
 
+function retrieveNewUserData(event) {
+  event.preventDefault()
+  let form = event.target
+  let els = form.elements
+  let name = els[0].value
+  let email = els[1].value
+  let username = els[2].value
+  let password = els[3].value
+
+  clearNewUserForm()
+
+  let avatarButton = document.createElement('button')
+  avatarButton.innerText = "Choose an Avatar"
+  avatarButton.addEventListener('click',()=>{
+    clearNewUserForm()
+    Avatar.getAllAvatars()
+  })
+  divNewUser.append(avatarButton)
+
+  createNewUser(name,email,username,password)
+}
+
+
+
+
+function createNewUser(name,email,username,password) {
+    let user = new User(name,username,1)
+  fetch('http://localhost:3000/users',{
+  method: 'POST',
+  headers:{
+    'Content-Type': 'application/json',
+    'accept': 'application.json'
+
+  },
+  body: JSON.stringify({
+    name: name,
+    email: email,
+    username: username,
+    password: password
+  })
+})
+}
 function clearLogin() {
   divLogin.innerHTML = ""
 }
