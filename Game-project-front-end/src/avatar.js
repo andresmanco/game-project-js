@@ -8,6 +8,7 @@ class Avatar{
   }
 
   static getAllAvatars(){
+    divContainer.innerHTML = ''
     gameStore.avatars.forEach(avatar=>{avatar.renderAvatar()})
   }
 

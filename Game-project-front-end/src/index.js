@@ -1,6 +1,8 @@
 const divContainer = document.querySelector('#fighter-container')
 const divNewUser = document.querySelector('#new-user-form')
 const divLogin = document.querySelector('#login-form')
+const buttonDiv = document.querySelector('#buttonsDiv')
+const profileHeader = document.querySelector('#username')
 let avatarPickedId
 document.addEventListener('DOMContentLoaded', ()=>{
   renderButtons()
@@ -12,6 +14,7 @@ function getUsers() {
   fetch('http://localhost:3000/users')
   .then(res=> res.json())
   .then(json=>{
+    gameStore.users = []
     json.forEach(element=>createUsers(element))
   })
 }
@@ -26,6 +29,7 @@ function getAvatars() {
   fetch('http://localhost:3000/avatars')
   .then(res=> res.json())
   .then(json=>{
+    gameStore.avatars = []
     json.forEach(element=>
       createAvatars(element))
   })
@@ -36,7 +40,7 @@ function createAvatars(element) {
 }
 
 function renderButtons() {
-  const buttonDiv = document.querySelector('#buttonsDiv')
+  buttonDiv.innerHTML = ''
   let loginBtn = document.createElement('button')
   let accBtn = document.createElement('button')
 
@@ -53,6 +57,8 @@ function renderButtons() {
 function renderLogin() {
   clearLogin()
   clearNewUserForm()
+  divContainer.innerHTML = ''
+  avatarPickedId = undefined
   let loginForm = document.createElement('form')
   let usernameInput = document.createElement('input')
   let passwordInput = document.createElement('input')
@@ -76,6 +82,8 @@ function renderLogin() {
 function renderNewUserForm() {
   clearLogin()
   clearNewUserForm()
+  divContainer.innerHTML = ''
+  avatarPickedId = undefined
   let createUserForm = document.createElement('form')
   let nameInput = document.createElement('input')
   let emailInput = document.createElement('input')
@@ -87,9 +95,7 @@ function renderNewUserForm() {
   emailInput.placeholder = 'Email...'
   usernameInput.placeholder = 'Username...'
   password.placeholder = 'Password...'
-
   submit.type = 'submit'
-
   nameInput.name = 'name'
   emailInput.name = 'email'
   usernameInput.name = 'username'
@@ -114,18 +120,27 @@ function retrieveNewUserData(event) {
   let password = els[3].value
 
   clearNewUserForm()
-
+  if(name === "" || username === "" || email === "" || password === ""){
+    alert('Need to fill all the fields')
+    renderNewUserForm()
+    return
+  }
   createNewUser(name, email, username, password)
 }
 
 function createNewUser(name, email, username, password) {
+  if (avatarPickedId === undefined){
+    alert('Need to pick an Avatar')
+    renderNewUserForm()
+    return
+  }
+  divContainer.innerHTML = ''
    let user = new User(name, username, password, avatarPickedId)
    fetch('http://localhost:3000/users',{
      method: 'POST',
      headers:{
        'Content-Type': 'application/json',
        'accept': 'application.json'
-
      },
      body: JSON.stringify({
        name: name,
@@ -140,7 +155,6 @@ function createNewUser(name, email, username, password) {
 }
 
   function userAvatar(userId) {
-    debugger
     fetch('http://localhost:3000/user_avatars',{
       method: 'POST',
       headers:{
@@ -151,8 +165,9 @@ function createNewUser(name, email, username, password) {
         user_id: userId,
         avatar_id: avatarPickedId
       })
-    }).then(r=> r.json())
-    .then(json => {console.log(json)})
+    })
+    getUsers()
+    getAvatars()
   }
 
 function clearLogin() {

@@ -42,14 +42,12 @@ class User{
 
   renderUser(){
     const divProfile = document.querySelector('#profile-container')
-    const divBtn = document.querySelector('#buttonsDiv')
-    divBtn.innerHTML = ''
+    buttonDiv.innerHTML = ''
     divContainer.innerHTML = ''
 
     let h1 = document.createElement('h1')
     let btnExit = document.createElement('button')
     let btnPlay = document.createElement('button')
-    let divName = document.createElement('div')
     let divAvatars = document.createElement('div')
 
     btnExit.innerText = 'Logout'
@@ -57,15 +55,25 @@ class User{
     h1.innerText = `${this.username}, pick your avatar`
     btnExit.classList.add('ui', 'button')
     btnPlay.classList.add('ui', 'positive', 'button')
-    divName.classList.add('header')
+    profileHeader.classList.add('header')
+    profileHeader.id = `div-${this.id}`
 
-    divBtn.append(btnPlay, btnExit)
-    divName.append(h1)
-    divProfile.append(divName)
+    btnExit.addEventListener('click', this.logout)
+
+    buttonDiv.append(btnPlay, btnExit)
+    profileHeader.append(h1)
+    divProfile.append(profileHeader)
 
 
     this.getAvatars().forEach(avatar=> {
       avatar.renderAvatar()
     })
+  }
+
+  logout(){
+    profileHeader.innerHTML = ''
+    buttonDiv.innerHTML = ''
+    divContainer.innerHTML = ''
+    renderButtons()
   }
 }
