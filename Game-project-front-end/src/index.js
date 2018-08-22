@@ -54,13 +54,22 @@ function renderLogin() {
   let loginForm = document.createElement('form')
   let usernameInput = document.createElement('input')
   let passwordInput = document.createElement('input')
-  let submitBtn = document.createElement('submit')
+  let submitBtn = document.createElement('input')
 
   usernameInput.placeholder = 'Username...'
   passwordInput.placeholder = "Password..."
 
+  submitBtn.type = 'submit'
+
+
   usernameInput.name = 'username'
   passwordInput.name = 'password'
+
+
+  loginForm.append(usernameInput,passwordInput,submitBtn)
+  divLogin.append(loginForm)
+
+
 
   loginForm.append(usernameInput, passwordInput)
   divLogin.append('loginForm')
@@ -72,23 +81,55 @@ function renderNewUserForm() {
   let emailInput = document.createElement('input')
   let usernameInput = document.createElement('input')
   let password = document.createElement('input')
-  let submit = document.createElement('submit')
+  let submit = document.createElement('input')
 
   nameInput.placeholder = 'Full Name...'
   emailInput.placeholder = 'Email...'
   usernameInput.placeholder = 'Username...'
   password.placeholder = 'Password...'
 
+  submit.type = 'submit'
+
   nameInput.name = 'name'
   emailInput.name = 'email'
   usernameInput.name = 'username'
   password.name = 'password'
 
-  createUserForm.append(nameInput,emailInput,usernameInput,passwordInput)
+  createUserForm.append(nameInput,emailInput,usernameInput,password,submit)
+  createUserForm.addEventListener('submit', ()=> retrieveNewUserData(event))
   divNewUser.append(createUserForm)
 }
 
 
+function retrieveNewUserData(event) {
+  event.preventDefault()
+  let form = event.target
+  let els = form.elements
+  let name = els[0].value
+  let email = els[1].value
+  let username = els[2].value
+  let password = els[3].value
+
+
+  createNewUser(name,email,username,password)
+}
+
+
+function createNewUser(name,email,username,password) {
+  new User(name,username,1)
+  fetch('http://localhost:3000/users',{
+  method: 'POST',
+  headers:{
+    'Content-Type': 'application/json'
+  }
+  body: JSON.stringify({
+    name: name
+    email: email
+    username: username
+    password: password
+  })
+  })
+}
 function clearLogin() {
   divLogin.innerHTML = ""
 }
