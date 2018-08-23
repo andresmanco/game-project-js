@@ -8,6 +8,17 @@ class User{
     this.password = password
     gameStore.users.push(this)
   }
+
+  deleteAvatar(idAvatar){
+    let arr = []
+    this.avatarId.forEach(id=>{
+      if(id !== idAvatar){
+        arr.push(id)
+      }
+    })
+    this.avatarId = arr
+  }
+
   getAvatars(){
     let arr = []
     this.avatarId.forEach(id=>{
@@ -31,7 +42,6 @@ class User{
     promptH1.innerText = ''
     pointsCounter.innerText = ''
 
-
     let user = gameStore.users.find(user=>{
       return user.username === username
     })
@@ -39,6 +49,7 @@ class User{
     if (user !== undefined){
       if (password === user.password){
         logedIn = true
+        idLogedIn = user.id
         usernameLogedIn = user.username
         passwordLogedIn = user.password
         user.renderUser()
@@ -72,11 +83,9 @@ class User{
 
     btnPlay.addEventListener('click', play)
     btnExit.addEventListener('click', this.logout)
-
     buttonDiv.append(btnPlay, btnExit)
     profileHeader.append(h1)
     divProfile.append(profileHeader)
-
 
     this.getAvatars().forEach(avatar=> {
       avatar.renderAvatar()

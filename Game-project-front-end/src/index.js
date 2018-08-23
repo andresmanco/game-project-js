@@ -7,6 +7,7 @@ let avatarPickedId
 let logedIn = false
 let usernameLogedIn
 let passwordLogedIn
+let idLogedIn
 document.addEventListener('DOMContentLoaded', ()=>{
   renderButtons()
   getUsers()
@@ -152,25 +153,55 @@ function createNewUser(name, email, username, password) {
      })
    }).then(r=> r.json())
    .then(user=>{
-     userAvatar(user.id)
+     userAvatarPost(user.id)
    })
 }
 
-  function userAvatar(userId) {
-    fetch('http://localhost:3000/user_avatars',{
-      method: 'POST',
-      headers:{
-        'Content-Type': 'application/json',
-        'accept': 'application.json'
-      },
-      body: JSON.stringify({
-        user_id: userId,
-        avatar_id: avatarPickedId
-      })
+function userAvatarPost(userId) {
+  fetch('http://localhost:3000/user_avatars',{
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json',
+      'accept': 'application.json'
+    },
+    body: JSON.stringify({
+      user_id: userId,
+      avatar_id: avatarPickedId
     })
-    getUsers()
-    getAvatars()
-  }
+  })
+  getUsers()
+  getAvatars()
+}
+
+function userAvatarGet(e) {
+  const avatarId = parseInt(e.target.parentNode.id.split('-')[1])
+  fetch('http://localhost:3000/user_avatars')
+  .then(r=>r.json())
+  .then(json => {
+    json.forEach(userAvatar=>{
+      if(userAvatar.user_id === idLogedIn && userAvatar.avatar_id === avatarId){
+        userAvatarDelete(userAvatar.id)
+      }
+    })
+  })
+}
+
+function userAvatarDelete(id) {
+  fetch(`http://localhost:3000/user_avatars/${id}`, {
+    method: "DELETE"
+  }).then(r => r.json())
+  .then(json=>{
+    let user = User.findUser(json.user_id)
+    user.deleteAvatar(json.avatar_id)
+  })
+  profileHeader.innerHTML = ''
+  buttonDiv.innerHTML = ''
+  divContainer.innerHTML = ''
+  document.querySelector('#total-points').innerHTML = ''
+  // getUsers()
+  User.loginUser(usernameLogedIn, passwordLogedIn)
+}
+
 
 function clearLogin() {
   divLogin.innerHTML = ""
@@ -205,8 +236,4 @@ function visible(e) {
   })
   e.currentTarget.querySelector('button').style.visibility = 'visible'
   // debugger
-}
-
-function highlight(e) {
-
 }

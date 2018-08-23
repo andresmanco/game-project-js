@@ -26,8 +26,8 @@ class Avatar{
     let divDescription = document.createElement('div')
     let deleteBtn = document.createElement('button')
 
+    deleteBtn.addEventListener('click', userAvatarGet)
     divCard.addEventListener('click', pickAvatar)
-    divCard.addEventListener('click', highlight)
     if(logedIn === true){
       divCard.addEventListener('click', visible)
     }

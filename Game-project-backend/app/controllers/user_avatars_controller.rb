@@ -2,8 +2,13 @@ class UserAvatarsController < ApplicationController
   def index
     render json: UserAvatar.all
   end
+
   def create
     render json: UserAvatar.create(userAvatar_params)
+  end
+
+  def destroy
+    render json: UserAvatar.find(params[:id]).destroy
   end
 
   private
