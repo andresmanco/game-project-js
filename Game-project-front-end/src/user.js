@@ -27,12 +27,20 @@ class User{
   }
 
   static loginUser(username, password){
+    timerH1.innerText = ''
+    promptH1.innerText = ''
+    pointsCounter.innerText = ''
+
+
     let user = gameStore.users.find(user=>{
       return user.username === username
     })
 
     if (user !== undefined){
       if (password === user.password){
+        logedIn = true
+        usernameLogedIn = user.username
+        passwordLogedIn = user.password
         user.renderUser()
       }else{
         alert('username or password incorrect')
@@ -42,8 +50,12 @@ class User{
 
   renderUser(){
     const divProfile = document.querySelector('#profile-container')
+    const pointsh1 = document.querySelector('#total-points')
     buttonDiv.innerHTML = ''
     divContainer.innerHTML = ''
+    if(points > 0){
+      pointsh1.innerText = `You got ${points} points`
+    }
 
     let h1 = document.createElement('h1')
     let btnExit = document.createElement('button')
@@ -58,6 +70,7 @@ class User{
     profileHeader.classList.add('header')
     profileHeader.id = `div-${this.id}`
 
+    btnPlay.addEventListener('click', play)
     btnExit.addEventListener('click', this.logout)
 
     buttonDiv.append(btnPlay, btnExit)
@@ -71,9 +84,13 @@ class User{
   }
 
   logout(){
+    logedIn = false;
+    usernameLogedIn = undefined;
+    passwordLogedIn = undefined;
     profileHeader.innerHTML = ''
     buttonDiv.innerHTML = ''
     divContainer.innerHTML = ''
+    document.querySelector('#total-points').innerHTML = ''
     renderButtons()
   }
 }

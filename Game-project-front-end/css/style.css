@@ -11,13 +11,16 @@ div {
   justify-content: center;
 }
 .card {
+  display: grid;
+  grid-template-columns: 5fr 5fr;
   width: 100px;
   height: 300px;
 }
 
 .image {
-  width: 80px;
-  height: 200px;
+  width: 30%;
+  height: 100%
+float: left;
 }
 
 .header {

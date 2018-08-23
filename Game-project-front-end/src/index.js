@@ -4,6 +4,9 @@ const divLogin = document.querySelector('#login-form')
 const buttonDiv = document.querySelector('#buttonsDiv')
 const profileHeader = document.querySelector('#username')
 let avatarPickedId
+let logedIn = false
+let usernameLogedIn
+let passwordLogedIn
 document.addEventListener('DOMContentLoaded', ()=>{
   renderButtons()
   getUsers()
@@ -101,7 +104,6 @@ function renderNewUserForm() {
   usernameInput.name = 'username'
   password.name = 'password'
 
-
   createUserForm.append(nameInput, emailInput, usernameInput, password, submit)
   createUserForm.addEventListener('submit', ()=>retrieveNewUserData(event))
 
@@ -179,6 +181,12 @@ function clearNewUserForm() {
 }
 
 function pickAvatar(e) {
+  let allCards = e.currentTarget.parentNode.querySelectorAll('.card')
+  allCards.forEach(card=> {
+    card.style.backgroundColor = ''
+  })
+  e.currentTarget.style.backgroundColor = 'lightblue'
+
   avatarPickedId = parseInt(e.currentTarget.id.split('-')[1])
 }
 
@@ -188,4 +196,17 @@ function login(e){
   let username = e.target.elements[0].value
   let password = e.target.elements[1].value
   User.loginUser(username, password)
+}
+
+function visible(e) {
+  let allCards = e.currentTarget.parentNode.querySelectorAll('.card')
+  allCards.forEach(card=> {
+    card.querySelector('button').style.visibility = 'hidden'
+  })
+  e.currentTarget.querySelector('button').style.visibility = 'visible'
+  // debugger
+}
+
+function highlight(e) {
+
 }

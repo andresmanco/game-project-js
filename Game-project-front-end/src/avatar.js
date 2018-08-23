@@ -24,9 +24,15 @@ class Avatar{
     let divImage = document.createElement('div')
     let divHeader = document.createElement('div')
     let divDescription = document.createElement('div')
+    let deleteBtn = document.createElement('button')
 
     divCard.addEventListener('click', pickAvatar)
-
+    divCard.addEventListener('click', highlight)
+    if(logedIn === true){
+      divCard.addEventListener('click', visible)
+    }
+    deleteBtn.innerText = 'DELETE'
+    deleteBtn.style.visibility = 'hidden'
     divHeader.classList.add('header')
     divDescription.classList.add('description')
     p.innerHTML = this.description
@@ -38,7 +44,7 @@ class Avatar{
     divCard.classList.add('card')
     divHeader.append(h4)
     divDescription.append(p)
-    divCard.append(divImage, divHeader, divDescription)
+    divCard.append(divImage, divHeader, divDescription, deleteBtn)
     divContainer.append(divCard)
   }
 
