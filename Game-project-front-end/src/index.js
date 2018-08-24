@@ -30,6 +30,7 @@ function getUsers() {
   })
 }
 function setUserPostId(id) {
+  console.log('im here in userpostid')
   userAvatarPostId = id
 }
 function setAvatarPostId(id) {
@@ -186,26 +187,40 @@ function userAvatarPost(userId) {
   getAvatars()
 }
 function addNewAvatar() {
-  console.log("i'm in newAvatar")
-  fetch('http://localhost:3000/user_avatars',{
-    method: 'POST',
-    headers:{
-      'Content-Type': 'application/json',
-      'accept': 'application.json'
-    },
-    body: JSON.stringify({
-      user_id: userAvatarPostId,
-      avatar_id: avatarUserPostId
+
+  let user = User.findUser(userAvatarPostId)
+
+  let avatars = user.getAvatars()
+
+  let bool = true
+
+  for(element of avatars){
+    if(element.id === avatarUserPostId){
+      bool = false;
+      break;
+    }
+  }
+  if(bool){
+    fetch('http://localhost:3000/user_avatars',{
+      method: 'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        'accept': 'application.json'
+      },
+      body: JSON.stringify({
+        user_id: userAvatarPostId,
+        avatar_id: avatarUserPostId
+      })
     })
+    .then(res=>res.json())
+    .then(json=>{
+      profileDiv.innerHTML = ""
+      divContainer.innerHTML = ""
+      newAvatarDiv.innerHTML = ""
+
+      user.renderUser()
   })
-  .then(res=>res.json())
-  .then(json=>{
-    profileDiv.innerHTML = ""
-    divContainer.innerHTML = ""
-    newAvatarDiv.innerHTML = ""
-    let user = User.findUser(json.user_id)
-    user.renderUser()
-  })
+  }
 }
 
 function userAvatarGet(e) {
