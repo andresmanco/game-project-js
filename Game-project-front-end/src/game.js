@@ -1,8 +1,5 @@
-// const promptDiv = document.querySelector('#game-prompt')
-// const pointsDiv = document.querySelector('#points')
 const pointsCounter = document.querySelector('#points-counter')
 const promptH1 = document.querySelector('#prompt-h1')
-// const timerDiv = document.querySelector('#timer')
 const timerH1 = document.querySelector('#timer-h1')
 let points
 let timer
@@ -16,10 +13,7 @@ function getRandomInt() {
 
 function prompt() {
   let num = getRandomInt()
-  // debugger
   let letter = Object.keys(promptObj[num])[0]
-  // debugger
-  // let value = promptObj[num][letter]
   promptH1.innerHTML = letter
 }
 
@@ -27,7 +21,6 @@ function checkEquality(event) {
   if(event.key.toLowerCase() === promptH1.innerText.toLowerCase()){
     points++
     pointsCounter.innerHTML = points
-    // console.log('these are equal')
   }else{
     points--;
     pointsCounter.innerText = points
@@ -36,10 +29,11 @@ function checkEquality(event) {
 function play() {
   if (avatarPickedId === undefined){
     alert('Need to pick an Avatar')
-    document.querySelector(`#div-${idLogedIn}`).innerHTML = ''
+    clearAll()
     User.loginUser(usernameLogedIn, passwordLogedIn)
     return
   }
+
   document.querySelector('#total-points').innerHTML = ''
   buttonDiv.innerHTML = ''
   divContainer.innerHTML = ''
@@ -54,8 +48,9 @@ function play() {
 
   h4.innerHTML = avatar.name
   img.src = avatar.image
-
   avatarGameDiv.append(h4,img)
+
+  clearAll()
 
   points = 0
   timer = 10
@@ -64,14 +59,18 @@ function play() {
   const timerInterval = setInterval(timerFunc, 1000)
   function timerFunc() {
     timerH1.innerText = timer
-    timer--
+
     if(timer === 0){
+      document.removeEventListener("keydown", checkEquality);
       clearInterval(promptInterval)
       clearInterval(timerInterval)
       pointsCounter.innerText = "Your time is over"
-      scoresPost(points)
-      User.loginUser(usernameLogedIn, passwordLogedIn)
       avatarGameDiv.innerHTML = ''
+      setTimeout(()=>{
+        scoresPost(points)
+        User.loginUser(usernameLogedIn, passwordLogedIn)
+       }, 3000);
     }
+    timer--
   }
 }
