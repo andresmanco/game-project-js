@@ -15,7 +15,9 @@ class Avatar{
   static findAvatar(id){
     return gameStore.avatars.find(avatar=> {return avatar.id === id})
   }
-
+   getAvatarId() {
+    return this.id
+  }
   renderAvatar(){
     let img = document.createElement('img')
     let h4 = document.createElement('h4')
@@ -27,7 +29,14 @@ class Avatar{
     let deleteBtn = document.createElement('button')
 
     deleteBtn.addEventListener('click', userAvatarGet)
-    divCard.addEventListener('click', pickAvatar)
+    divCard.addEventListener('click', ()=>{
+      pickAvatar
+      setAvatarPostId(this.id)
+      if(logedIn){
+        addNewAvatar()
+        console.log("I'm in Avatar")
+      }
+    })
     if(logedIn === true){
       divCard.addEventListener('click', visible)
     }

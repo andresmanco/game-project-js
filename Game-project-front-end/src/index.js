@@ -3,6 +3,13 @@ const divNewUser = document.querySelector('#new-user-form')
 const divLogin = document.querySelector('#login-form')
 const buttonDiv = document.querySelector('#buttonsDiv')
 const profileHeader = document.querySelector('#username')
+const profileDiv = document.querySelector('#profile-container')
+const newAvatarDiv = document.querySelector('#new-avatar')
+
+
+let userAvatarPostId
+let avatarUserPostId
+
 let avatarPickedId
 let logedIn = false
 let usernameLogedIn
@@ -21,6 +28,12 @@ function getUsers() {
     gameStore.users = []
     json.forEach(element=>createUsers(element))
   })
+}
+function setUserPostId(id) {
+  userAvatarPostId = id
+}
+function setAvatarPostId(id) {
+  avatarUserPostId = id
 }
 
 function createUsers(element) {
@@ -171,6 +184,28 @@ function userAvatarPost(userId) {
   })
   getUsers()
   getAvatars()
+}
+function addNewAvatar() {
+  console.log("i'm in newAvatar")
+  fetch('http://localhost:3000/user_avatars',{
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json',
+      'accept': 'application.json'
+    },
+    body: JSON.stringify({
+      user_id: userAvatarPostId,
+      avatar_id: avatarUserPostId
+    })
+  })
+  .then(res=>res.json())
+  .then(json=>{
+    profileDiv.innerHTML = ""
+    divContainer.innerHTML = ""
+    newAvatarDiv.innerHTML = ""
+    let user = User.findUser(json.user_id)
+    user.renderUser()
+  })
 }
 
 function userAvatarGet(e) {
