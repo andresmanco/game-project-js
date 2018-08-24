@@ -191,15 +191,9 @@ function userAvatarDelete(id) {
     method: "DELETE"
   }).then(r => r.json())
   .then(json=>{
-    let user = User.findUser(json.user_id)
-    user.deleteAvatar(json.avatar_id)
+    let currentUser = User.findUser(json.user_id)
+    currentUser.deleteAvatar(json.avatar_id)
   })
-  profileHeader.innerHTML = ''
-  buttonDiv.innerHTML = ''
-  divContainer.innerHTML = ''
-  document.querySelector('#total-points').innerHTML = ''
-  // getUsers()
-  User.loginUser(usernameLogedIn, passwordLogedIn)
 }
 
 
@@ -236,4 +230,21 @@ function visible(e) {
   })
   e.currentTarget.querySelector('button').style.visibility = 'visible'
   // debugger
+}
+
+function scoresPost(points){
+  // debugger
+  fetch('http://localhost:3000/scores',{
+    method: 'POST',
+    headers:{
+      'Content-Type': 'application/json',
+      'accept': 'application.json'
+    },
+    body: JSON.stringify({
+      user_id: idLogedIn,
+      points: points,
+      avatar_id: avatarPickedId
+    })
+  }).then(r => r.json())
+  .then(json => {console.log(json)})
 }

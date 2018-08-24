@@ -17,10 +17,17 @@ class User{
       }
     })
     this.avatarId = arr
+
+    profileHeader.innerHTML = ''
+    buttonDiv.innerHTML = ''
+    divContainer.innerHTML = ''
+    document.querySelector('#total-points').innerHTML = ''
+    User.loginUser(usernameLogedIn, passwordLogedIn)
   }
 
   getAvatars(){
     let arr = []
+
     this.avatarId.forEach(id=>{
       arr.push(gameStore.avatars.find(avatar=>{
         return avatar.id === id
@@ -61,11 +68,12 @@ class User{
 
   renderUser(){
     const divProfile = document.querySelector('#profile-container')
-    const pointsh1 = document.querySelector('#total-points')
+    const pointsH1 = document.querySelector('#total-points')
+    // document.querySelector('#points-counter').innerHTML = ''
     buttonDiv.innerHTML = ''
     divContainer.innerHTML = ''
     if(points > 0){
-      pointsh1.innerText = `You got ${points} points`
+      pointsH1.innerText = `You got ${points} points`
     }
 
     let h1 = document.createElement('h1')
@@ -96,6 +104,7 @@ class User{
     logedIn = false;
     usernameLogedIn = undefined;
     passwordLogedIn = undefined;
+    idLogedIn = undefined;
     profileHeader.innerHTML = ''
     buttonDiv.innerHTML = ''
     divContainer.innerHTML = ''
