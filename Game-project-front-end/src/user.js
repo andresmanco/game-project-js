@@ -23,6 +23,13 @@ class User{
     User.loginUser(usernameLogedIn, passwordLogedIn)
   }
 
+  addAvatar(idAvatar){
+    points = undefined
+    this.avatarId.push(idAvatar)
+  }
+
+
+
   getAvatars(){
     let arr = []
 

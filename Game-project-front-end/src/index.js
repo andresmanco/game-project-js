@@ -201,8 +201,10 @@ function addNewAvatar() {
     })
     .then(res=>res.json())
     .then(json=>{
+      let user = User.findUser(json.user_id)
+      user.addAvatar(json.avatar_id)
       clearAll()
-      user.renderUser()
+      User.loginUser(usernameLogedIn, passwordLogedIn)
     })
   }
 }
