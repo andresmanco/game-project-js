@@ -5,7 +5,15 @@ const buttonDiv = document.querySelector('#buttonsDiv')
 const profileHeader = document.querySelector('#username')
 const profileDiv = document.querySelector('#profile-container')
 const newAvatarDiv = document.querySelector('#new-avatar')
+
+const highScoresDiv = document.querySelector('#high-scores')
+
+let userAvatarPostId
+let avatarUserPostId
+
+let avatarPickedId
 const totalPoints = document.querySelector('#total-points')
+
 
 let logedIn = false
 let usernameLogedIn
@@ -14,9 +22,32 @@ let avatarPickedId
 let idLogedIn
 
 document.addEventListener('DOMContentLoaded', ()=>{
+
+  let highScoreBtn = document.createElement('button')
+  let clearScores = document.createElement('button')
+  highScoreBtn.innerHTML = 'HIGH SCORES!'
+  clearScores.innerHTML= 'Clear Scores'
+  highScoresDiv.append(highScoreBtn)
+
+
+
+
+
   renderButtons()
   getUsers()
   getAvatars()
+  scoresGet()
+
+  highScoreBtn.addEventListener('click',()=>{
+    highScoresDiv.innerHTML=""
+    Score.renderHighScores()
+    highScoresDiv.append(clearScores)
+  })
+
+  clearScores.addEventListener('click',()=>{
+    highScoresDiv.innerHTML=""
+  })
+
 })
 
 function getUsers() {
@@ -290,4 +321,17 @@ function clearAll() {
   divContainer.innerHTML = ''
   profileHeader.innerHTML = ''
   newAvatarDiv.innerHTML = ''
+}
+
+function scoresGet() {
+  fetch('http://localhost:3000/scores')
+  .then(res=>res.json())
+  .then(json=>json.forEach(element=>{
+
+    createScores(element)
+  }))
+}
+
+function createScores(element) {
+  new Score(element.id,element.points, element.user_id)
 }
