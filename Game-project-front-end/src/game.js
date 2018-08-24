@@ -29,7 +29,8 @@ function checkEquality(event) {
     pointsCounter.innerHTML = points
     // console.log('these are equal')
   }else{
-    pointsCounter.innerText = "Wrong!"
+    points--;
+    pointsCounter.innerText = points
   }
 }
 function play() {
@@ -44,6 +45,18 @@ function play() {
   divContainer.innerHTML = ''
   document.querySelector(`#div-${idLogedIn}`).innerHTML = ''
   document.querySelector('#profile-container').innerHTML = ''
+
+  let avatarGameDiv = document.querySelector('#game-avatar')
+
+  let avatar = Avatar.findAvatar(avatarPickedId)
+  let h4 = document.createElement('h4')
+  let img = document.createElement('img')
+
+  h4.innerHTML = avatar.name
+  img.src = avatar.image
+
+  avatarGameDiv.append(h4,img)
+
   points = 0
   timer = 10
   document.addEventListener("keydown", checkEquality)
@@ -58,7 +71,7 @@ function play() {
       pointsCounter.innerText = "Your time is over"
       scoresPost(points)
       User.loginUser(usernameLogedIn, passwordLogedIn)
-
+      avatarGameDiv.innerHTML = ''
     }
   }
 }
