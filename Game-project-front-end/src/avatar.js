@@ -30,7 +30,7 @@ class Avatar{
 
     deleteBtn.addEventListener('click', userAvatarGet)
     divCard.addEventListener('click', ()=>{
-      pickAvatar
+      pickAvatar(event)
       setAvatarPostId(this.id)
       if(logedIn){
         addNewAvatar()
