@@ -22,7 +22,8 @@ function checkEquality(event) {
     points++
     pointsCounter.innerHTML = points
   }else{
-    pointsCounter.innerText = "Wrong!"
+    points--;
+    pointsCounter.innerText = points
   }
 }
 function play() {
@@ -32,7 +33,25 @@ function play() {
     User.loginUser(usernameLogedIn, passwordLogedIn)
     return
   }
+
+  document.querySelector('#total-points').innerHTML = ''
+  buttonDiv.innerHTML = ''
+  divContainer.innerHTML = ''
+  document.querySelector(`#div-${idLogedIn}`).innerHTML = ''
+  document.querySelector('#profile-container').innerHTML = ''
+
+  let avatarGameDiv = document.querySelector('#game-avatar')
+
+  let avatar = Avatar.findAvatar(avatarPickedId)
+  let h4 = document.createElement('h4')
+  let img = document.createElement('img')
+
+  h4.innerHTML = avatar.name
+  img.src = avatar.image
+  avatarGameDiv.append(h4,img)
+
   clearAll()
+
   points = 0
   timer = 10
   document.addEventListener("keydown", checkEquality)
@@ -46,6 +65,7 @@ function play() {
       clearInterval(promptInterval)
       clearInterval(timerInterval)
       pointsCounter.innerText = "Your time is over"
+      avatarGameDiv.innerHTML = ''
       setTimeout(()=>{
         scoresPost(points)
         User.loginUser(usernameLogedIn, passwordLogedIn)
