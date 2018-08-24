@@ -10,6 +10,7 @@ class User{
   }
 
   deleteAvatar(idAvatar){
+    points = undefined
     let arr = []
     this.avatarId.forEach(id=>{
       if(id !== idAvatar){
@@ -18,10 +19,7 @@ class User{
     })
     this.avatarId = arr
 
-    profileHeader.innerHTML = ''
-    buttonDiv.innerHTML = ''
-    divContainer.innerHTML = ''
-    document.querySelector('#total-points').innerHTML = ''
+    clearAll()
     User.loginUser(usernameLogedIn, passwordLogedIn)
   }
 
@@ -45,9 +43,7 @@ class User{
   }
 
   static loginUser(username, password){
-    timerH1.innerText = ''
-    promptH1.innerText = ''
-    pointsCounter.innerText = ''
+    clearAll()
 
     let user = gameStore.users.find(user=>{
       return user.username === username
@@ -69,13 +65,9 @@ class User{
     return this.id
   }
   renderUser(){
-    const divProfile = document.querySelector('#profile-container')
-    const pointsH1 = document.querySelector('#total-points')
-    // document.querySelector('#points-counter').innerHTML = ''
-    buttonDiv.innerHTML = ''
-    divContainer.innerHTML = ''
+    clearAll()
     if(points > 0){
-      pointsH1.innerText = `You got ${points} points`
+      totalPoints.innerText = `You got ${points} points`
     }
 
     let h1 = document.createElement('h1')
@@ -84,29 +76,24 @@ class User{
     let divAvatars = document.createElement('div')
     let avatarBtn = document.createElement('button')
 
-
     btnExit.innerText = 'Logout'
     btnPlay.innerText = 'Play'
     h1.innerText = `${this.username}, pick your avatar`
     btnExit.classList.add('ui', 'button')
     btnPlay.classList.add('ui', 'positive', 'button')
     profileHeader.classList.add('header')
-    profileHeader.id = `div-${this.id}`
-
-    setUserPostId(this.id)
 
     avatarBtn.innerHTML = 'Add an Avatar'
     avatarBtn.addEventListener('click',()=>{
       Avatar.getAllAvatars()
-      console.log("I'm in user")
     })
-    newAvatarDiv.append(avatarBtn)
 
     btnPlay.addEventListener('click', play)
     btnExit.addEventListener('click', this.logout)
+    newAvatarDiv.append(avatarBtn)
     buttonDiv.append(btnPlay, btnExit)
     profileHeader.append(h1)
-    divProfile.append(profileHeader)
+    profileDiv.append(profileHeader)
 
     this.getAvatars().forEach(avatar=> {
       avatar.renderAvatar()
@@ -114,14 +101,12 @@ class User{
   }
 
   logout(){
+    points = undefined
     logedIn = false;
     usernameLogedIn = undefined;
     passwordLogedIn = undefined;
     idLogedIn = undefined;
-    profileHeader.innerHTML = ''
-    buttonDiv.innerHTML = ''
-    divContainer.innerHTML = ''
-    document.querySelector('#total-points').innerHTML = ''
+    clearAll()
     renderButtons()
   }
 }

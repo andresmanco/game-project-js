@@ -5,16 +5,22 @@ const buttonDiv = document.querySelector('#buttonsDiv')
 const profileHeader = document.querySelector('#username')
 const profileDiv = document.querySelector('#profile-container')
 const newAvatarDiv = document.querySelector('#new-avatar')
+
 const highScoresDiv = document.querySelector('#high-scores')
 
 let userAvatarPostId
 let avatarUserPostId
 
 let avatarPickedId
+const totalPoints = document.querySelector('#total-points')
+
+
 let logedIn = false
 let usernameLogedIn
 let passwordLogedIn
+let avatarPickedId
 let idLogedIn
+
 document.addEventListener('DOMContentLoaded', ()=>{
 
   let highScoreBtn = document.createElement('button')
@@ -51,13 +57,6 @@ function getUsers() {
     gameStore.users = []
     json.forEach(element=>createUsers(element))
   })
-}
-function setUserPostId(id) {
-  console.log('im here in userpostid')
-  userAvatarPostId = id
-}
-function setAvatarPostId(id) {
-  avatarUserPostId = id
 }
 
 function createUsers(element) {
@@ -98,6 +97,7 @@ function renderButtons() {
 function renderLogin() {
   clearLogin()
   clearNewUserForm()
+  pointsCounter.innerText = ''
   divContainer.innerHTML = ''
   avatarPickedId = undefined
   let loginForm = document.createElement('form')
@@ -107,17 +107,13 @@ function renderLogin() {
 
   usernameInput.placeholder = 'Username...'
   passwordInput.placeholder = "Password..."
-
-  submitBtn.type = 'submit'
-  loginForm.addEventListener('submit', login)
-
   usernameInput.name = 'username'
   passwordInput.name = 'password'
+  submitBtn.type = 'submit'
 
-
+  loginForm.addEventListener('submit', login)
   loginForm.append(usernameInput, passwordInput, submitBtn)
   divLogin.append(loginForm)
-  // debugger
 }
 
 function renderNewUserForm() {
@@ -125,6 +121,7 @@ function renderNewUserForm() {
   clearNewUserForm()
   divContainer.innerHTML = ''
   avatarPickedId = undefined
+
   let createUserForm = document.createElement('form')
   let nameInput = document.createElement('input')
   let emailInput = document.createElement('input')
@@ -137,10 +134,10 @@ function renderNewUserForm() {
   usernameInput.placeholder = 'Username...'
   password.placeholder = 'Password...'
   submit.type = 'submit'
-  nameInput.name = 'name'
-  emailInput.name = 'email'
-  usernameInput.name = 'username'
-  password.name = 'password'
+  // nameInput.name = 'name'
+  // emailInput.name = 'email'
+  // usernameInput.name = 'username'
+  // password.name = 'password'
 
   createUserForm.append(nameInput, emailInput, usernameInput, password, submit)
   createUserForm.addEventListener('submit', ()=>retrieveNewUserData(event))
@@ -210,15 +207,13 @@ function userAvatarPost(userId) {
   getAvatars()
 }
 function addNewAvatar() {
-
-  let user = User.findUser(userAvatarPostId)
-
+  totalPoints.innerHTML = ''
+  let user = User.findUser(idLogedIn)
   let avatars = user.getAvatars()
-
   let bool = true
 
   for(element of avatars){
-    if(element.id === avatarUserPostId){
+    if(element.id === avatarPickedId){
       bool = false;
       break;
     }
@@ -231,18 +226,15 @@ function addNewAvatar() {
         'accept': 'application.json'
       },
       body: JSON.stringify({
-        user_id: userAvatarPostId,
-        avatar_id: avatarUserPostId
+        user_id: idLogedIn,
+        avatar_id: avatarPickedId
       })
     })
     .then(res=>res.json())
     .then(json=>{
-      profileDiv.innerHTML = ""
-      divContainer.innerHTML = ""
-      newAvatarDiv.innerHTML = ""
-
+      clearAll()
       user.renderUser()
-  })
+    })
   }
 }
 
@@ -269,7 +261,6 @@ function userAvatarDelete(id) {
   })
 }
 
-
 function clearLogin() {
   divLogin.innerHTML = ""
 }
@@ -284,7 +275,6 @@ function pickAvatar(e) {
     card.style.backgroundColor = ''
   })
   e.currentTarget.style.backgroundColor = 'lightblue'
-
   avatarPickedId = parseInt(e.currentTarget.id.split('-')[1])
 }
 
@@ -302,11 +292,9 @@ function visible(e) {
     card.querySelector('button').style.visibility = 'hidden'
   })
   e.currentTarget.querySelector('button').style.visibility = 'visible'
-  // debugger
 }
 
 function scoresPost(points){
-  // debugger
   fetch('http://localhost:3000/scores',{
     method: 'POST',
     headers:{
@@ -318,8 +306,18 @@ function scoresPost(points){
       points: points,
       avatar_id: avatarPickedId
     })
-  }).then(r => r.json())
-  .then(json => {console.log(json)})
+  })
+}
+
+function clearAll() {
+  totalPoints.innerHTML = ''
+  timerH1.innerText = ''
+  promptH1.innerText = ''
+  pointsCounter.innerText = ''
+  buttonDiv.innerHTML = ''
+  divContainer.innerHTML = ''
+  profileHeader.innerHTML = ''
+  newAvatarDiv.innerHTML = ''
 }
 
 function scoresGet() {
