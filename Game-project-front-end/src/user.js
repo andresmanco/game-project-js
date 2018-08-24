@@ -85,10 +85,11 @@ class User{
     profileHeader.classList.add('header')
     profileHeader.id = `div-${this.id}`
 
+    setUserPostId(this.id)
+
     avatarBtn.innerHTML = 'Add an Avatar'
     avatarBtn.addEventListener('click',()=>{
       Avatar.getAllAvatars()
-      setUserPostId(this.id)
       console.log("I'm in user")
     })
     newAvatarDiv.append(avatarBtn)
