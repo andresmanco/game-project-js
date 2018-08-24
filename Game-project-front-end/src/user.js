@@ -58,7 +58,9 @@ class User{
       }
     }
   }
-
+   getUserId() {
+    return this.id
+  }
   renderUser(){
     const divProfile = document.querySelector('#profile-container')
     const pointsh1 = document.querySelector('#total-points')
@@ -72,6 +74,8 @@ class User{
     let btnExit = document.createElement('button')
     let btnPlay = document.createElement('button')
     let divAvatars = document.createElement('div')
+    let avatarBtn = document.createElement('button')
+
 
     btnExit.innerText = 'Logout'
     btnPlay.innerText = 'Play'
@@ -80,6 +84,14 @@ class User{
     btnPlay.classList.add('ui', 'positive', 'button')
     profileHeader.classList.add('header')
     profileHeader.id = `div-${this.id}`
+
+    avatarBtn.innerHTML = 'Add an Avatar'
+    avatarBtn.addEventListener('click',()=>{
+      Avatar.getAllAvatars()
+      setUserPostId(this.id)
+      console.log("I'm in user")
+    })
+    newAvatarDiv.append(avatarBtn)
 
     btnPlay.addEventListener('click', play)
     btnExit.addEventListener('click', this.logout)
