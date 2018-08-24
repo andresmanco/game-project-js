@@ -279,6 +279,7 @@ function scoresPost(points){
 }
 
 function clearAll() {
+  totalPoints.innerHTML = ''
   timerH1.innerText = ''
   promptH1.innerText = ''
   pointsCounter.innerText = ''
@@ -286,5 +287,4 @@ function clearAll() {
   divContainer.innerHTML = ''
   profileHeader.innerHTML = ''
   newAvatarDiv.innerHTML = ''
-  totalPoints.innerHTML = ''
 }

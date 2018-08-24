@@ -11,6 +11,7 @@ class Avatar{
     divContainer.innerHTML = ''
     totalPoints.innerHTML = ''
     pointsCounter.innerText = ''
+    points = undefined
     gameStore.avatars.forEach(avatar=>{avatar.renderAvatar()})
   }
 

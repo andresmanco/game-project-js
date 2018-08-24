@@ -45,8 +45,8 @@ function play() {
       document.removeEventListener("keydown", checkEquality);
       clearInterval(promptInterval)
       clearInterval(timerInterval)
+      pointsCounter.innerText = "Your time is over"
       setTimeout(()=>{
-        pointsCounter.innerText = "Your time is over"
         scoresPost(points)
         User.loginUser(usernameLogedIn, passwordLogedIn)
        }, 3000);

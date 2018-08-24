@@ -10,6 +10,7 @@ class User{
   }
 
   deleteAvatar(idAvatar){
+    points = undefined
     let arr = []
     this.avatarId.forEach(id=>{
       if(id !== idAvatar){
@@ -43,9 +44,6 @@ class User{
 
   static loginUser(username, password){
     clearAll()
-    // timerH1.innerText = ''
-    // promptH1.innerText = ''
-    // pointsCounter.innerText = ''
 
     let user = gameStore.users.find(user=>{
       return user.username === username
@@ -103,6 +101,7 @@ class User{
   }
 
   logout(){
+    points = undefined
     logedIn = false;
     usernameLogedIn = undefined;
     passwordLogedIn = undefined;
