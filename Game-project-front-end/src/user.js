@@ -66,8 +66,12 @@ class User{
   }
   renderUser(){
     clearAll()
-    if(points > 0){
-      totalPoints.innerText = `You got ${points} points`
+    if(points !== undefined){
+      if(points <=0){
+        totalPoints.innerText = 'You got 0 points'
+      }else{
+        totalPoints.innerText = `You got ${points} points`
+      }
     }
 
     let h1 = document.createElement('h1')

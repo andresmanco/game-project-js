@@ -27,19 +27,13 @@ function checkEquality(event) {
   }
 }
 function play() {
+  clearAll()
   if (avatarPickedId === undefined){
     alert('Need to pick an Avatar')
-    clearAll()
+
     User.loginUser(usernameLogedIn, passwordLogedIn)
     return
   }
-
-  document.querySelector('#total-points').innerHTML = ''
-  buttonDiv.innerHTML = ''
-  divContainer.innerHTML = ''
-  document.querySelector(`#div-${idLogedIn}`).innerHTML = ''
-  document.querySelector('#profile-container').innerHTML = ''
-
   let avatarGameDiv = document.querySelector('#game-avatar')
 
   let avatar = Avatar.findAvatar(avatarPickedId)
@@ -49,8 +43,6 @@ function play() {
   h4.innerHTML = avatar.name
   img.src = avatar.image
   avatarGameDiv.append(h4,img)
-
-  clearAll()
 
   points = 0
   timer = 10

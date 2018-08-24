@@ -264,6 +264,7 @@ function visible(e) {
 }
 
 function scoresPost(points){
+  if(points > 0){
   fetch('http://localhost:3000/scores',{
     method: 'POST',
     headers:{
@@ -276,7 +277,7 @@ function scoresPost(points){
       avatar_id: avatarPickedId
     })
   })
-}
+}}
 
 function clearAll() {
   totalPoints.innerHTML = ''
