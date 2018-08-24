@@ -9,6 +9,8 @@ class Avatar{
 
   static getAllAvatars(){
     divContainer.innerHTML = ''
+    totalPoints.innerHTML = ''
+    pointsCounter.innerText = ''
     gameStore.avatars.forEach(avatar=>{avatar.renderAvatar()})
   }
 
@@ -31,10 +33,8 @@ class Avatar{
     deleteBtn.addEventListener('click', userAvatarGet)
     divCard.addEventListener('click', ()=>{
       pickAvatar(event)
-      setAvatarPostId(this.id)
       if(logedIn){
         addNewAvatar()
-        console.log("I'm in Avatar")
       }
     })
     if(logedIn === true){
