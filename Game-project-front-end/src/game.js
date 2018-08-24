@@ -33,6 +33,12 @@ function checkEquality(event) {
   }
 }
 function play() {
+  if (avatarPickedId === undefined){
+    alert('Need to pick an Avatar')
+    document.querySelector(`#div-${idLogedIn}`).innerHTML = ''
+    User.loginUser(usernameLogedIn, passwordLogedIn)
+    return
+  }
   document.querySelector('#total-points').innerHTML = ''
   buttonDiv.innerHTML = ''
   divContainer.innerHTML = ''
