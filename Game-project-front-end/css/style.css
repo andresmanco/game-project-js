@@ -11,6 +11,7 @@ div {
   justify-content: center;
 }
 .card {
+
   display: grid;
   grid-template-columns: 5fr 5fr;
   width: 100px;
@@ -18,12 +19,20 @@ div {
 }
 
 .image {
-  width: 30%;
-  height: 100%
-float: left;
+  width: 20%;
+  height: 50%;
+  margin: auto;
 }
 
 .header {
   text-align: center;
   font-style: italic;
+}
+
+.description{
+  text-align: center;
+}
+
+#total-points, #prompt-h1, #timer-h1, #points-counter {
+  text-align: center;
 }

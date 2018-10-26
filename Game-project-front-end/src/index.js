@@ -5,15 +5,9 @@ const buttonDiv = document.querySelector('#buttonsDiv')
 const profileHeader = document.querySelector('#username')
 const profileDiv = document.querySelector('#profile-container')
 const newAvatarDiv = document.querySelector('#new-avatar')
-
 const highScoresDiv = document.querySelector('#high-scores')
-
-let userAvatarPostId
-let avatarUserPostId
-
-let avatarPickedId
 const totalPoints = document.querySelector('#total-points')
-
+const highScores = document.querySelector('#high-scores')
 
 let logedIn = false
 let usernameLogedIn
@@ -25,13 +19,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
   let highScoreBtn = document.createElement('button')
   let clearScores = document.createElement('button')
+
+  highScoreBtn.classList.add('ui', 'primary', 'button')
   highScoreBtn.innerHTML = 'HIGH SCORES!'
   clearScores.innerHTML= 'Clear Scores'
   highScoresDiv.append(highScoreBtn)
-
-
-
-
 
   renderButtons()
   getUsers()
@@ -110,7 +102,8 @@ function renderLogin() {
   usernameInput.name = 'username'
   passwordInput.name = 'password'
   submitBtn.type = 'submit'
-
+  submitBtn.classList.add('ui', 'primary', 'button')
+  divLogin.classList.add('ui', 'input', 'focus')
   loginForm.addEventListener('submit', login)
   loginForm.append(usernameInput, passwordInput, submitBtn)
   divLogin.append(loginForm)
@@ -134,11 +127,9 @@ function renderNewUserForm() {
   usernameInput.placeholder = 'Username...'
   password.placeholder = 'Password...'
   submit.type = 'submit'
-  // nameInput.name = 'name'
-  // emailInput.name = 'email'
-  // usernameInput.name = 'username'
-  // password.name = 'password'
+  submit.classList.add('ui', 'primary', 'button')
 
+  divNewUser.classList.add('ui', 'input', 'focus')
   createUserForm.append(nameInput, emailInput, usernameInput, password, submit)
   createUserForm.addEventListener('submit', ()=>retrieveNewUserData(event))
 
@@ -321,6 +312,7 @@ function clearAll() {
   divContainer.innerHTML = ''
   profileHeader.innerHTML = ''
   newAvatarDiv.innerHTML = ''
+  highScores.innerHTML = ''
 }
 
 function scoresGet() {

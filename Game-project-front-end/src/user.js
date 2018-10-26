@@ -94,7 +94,9 @@ class User{
     btnPlay.classList.add('ui', 'positive', 'button')
     profileHeader.classList.add('header')
 
+    avatarBtn.classList.add('ui', 'primary', 'button')
     avatarBtn.innerHTML = 'Add an Avatar'
+
     avatarBtn.addEventListener('click',()=>{
       Avatar.getAllAvatars()
     })

@@ -16,7 +16,7 @@ class Score{
       return   b.points - a.points
     })
 
-    while(count <= 10){
+    while(count < 10){
       let li = document.createElement('li')
       let user = User.findUser(scoreArr[count].user_id)
       // debugger
